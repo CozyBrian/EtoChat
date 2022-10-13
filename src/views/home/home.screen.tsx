@@ -41,7 +41,9 @@ const HomeScreen = () => {
           <ModeSelector set={setMode} />
         </View>
       </View>
-      <GradientButton onPress={handleSubmit}>Find a listener</GradientButton>
+      <GradientButton onPress={handleSubmit}>
+        {`Find a ${mode === "L" ? "sharer" : "listener"}`}
+      </GradientButton>
     </MainContainer>
   );
 };
