@@ -1,0 +1,6 @@
+{
+  "extends": ["@react-native-community", "eslint-config-prettier"],
+  "rules": {
+    "quotes": [2, "double", { "avoidEscape": true }]
+  }
+}
