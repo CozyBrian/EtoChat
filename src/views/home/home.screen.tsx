@@ -5,6 +5,47 @@ import ProfileSelector from "./components/profileSelector";
 import ModeSelector from "./components/modeSelector";
 import GradientButton from "../../components/buttons";
 
+const HomeScreen = () => {
+  const [text, setText] = useState("");
+  const [profile, setProfile] = useState("A");
+  const [mode, setMode] = useState("S");
+
+  const handleSubmit = () => {
+    const data = {
+      text,
+      profile,
+      mode,
+    };
+
+    console.log(data);
+  };
+
+  return (
+    <MainContainer>
+      <View style={{ width: "100%" }}>
+        <View style={{ paddingHorizontal: 20, paddingTop: 48 }}>
+          <Label>
+            Enter a nickname{" "}
+            <Text style={{ color: "#bfbfbf" }}>(optional)</Text>
+          </Label>
+          <TextBox
+            placeholder="Type here to translate!"
+            onChangeText={(newText) => setText(newText)}
+            defaultValue={text}
+          />
+        </View>
+        <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
+          <ProfileSelector set={setProfile} />
+        </View>
+        <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
+          <ModeSelector set={setMode} />
+        </View>
+      </View>
+      <GradientButton onPress={handleSubmit}>Find a listener</GradientButton>
+    </MainContainer>
+  );
+};
+
 const MainContainer = styled(SafeAreaView)`
   height: 100%;
   align-items: center;
@@ -24,34 +65,5 @@ const TextBox = styled(TextInput)`
   border: 2px solid #e7e7e7;
   border-radius: 12px;
 `;
-
-const HomeScreen = () => {
-  const [text, setText] = useState("");
-
-  return (
-    <MainContainer>
-      <View style={{ width: "100%" }}>
-        <View style={{ paddingHorizontal: 20, paddingTop: 48 }}>
-          <Label>
-            Enter a nickname{" "}
-            <Text style={{ color: "#bfbfbf" }}>(optional)</Text>
-          </Label>
-          <TextBox
-            placeholder="Type here to translate!"
-            onChangeText={(newText) => setText(newText)}
-            defaultValue={text}
-          />
-        </View>
-        <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
-          <ProfileSelector />
-        </View>
-        <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
-          <ModeSelector />
-        </View>
-      </View>
-      <GradientButton>Find a listener</GradientButton>
-    </MainContainer>
-  );
-};
 
 export default HomeScreen;

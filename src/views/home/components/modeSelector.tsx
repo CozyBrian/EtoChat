@@ -2,7 +2,11 @@ import { Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ModeSelector = () => {
+interface props {
+  set: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ModeSelector = ({ set }: props) => {
   const [selected, setSelected] = useState("S");
 
   const options = [
@@ -12,6 +16,7 @@ const ModeSelector = () => {
 
   const handlePress = (id: string) => {
     setSelected(id);
+    set(id);
   };
 
   return (

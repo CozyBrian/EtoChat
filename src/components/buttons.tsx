@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 interface props {
   children: string;
+  onPress: () => void;
 }
 
 const Gradient = styled(TouchableOpacity)`
@@ -27,10 +28,10 @@ const ButtonText = styled(Text)`
   font-size: 18px;
 `;
 
-const GradientButton = ({ children }: props) => {
+const GradientButton = ({ children, onPress }: props) => {
   return (
     <ButtonContainer>
-      <Gradient>
+      <Gradient onPress={onPress}>
         <ButtonText>{children}</ButtonText>
       </Gradient>
     </ButtonContainer>
