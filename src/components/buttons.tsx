@@ -16,26 +16,45 @@ const Gradient = styled(TouchableOpacity)`
   border-radius: 999px;
 `;
 
-const ButtonContainer = styled(View)`
-  width: 100%;
-  padding-top: 16px;
-  padding-bottom: 16px;
+const GradientO = styled(TouchableOpacity)`
+  align-items: center;
+  padding: 16px;
+  margin-left: 24px;
+  margin-right: 24px;
+  border: 1px solid #2b92ff;
+  border-radius: 999px;
 `;
 
+const ButtonContainer = styled(View)`
+  width: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+`;
+interface buttonStyle {
+  color: string;
+}
 const ButtonText = styled(Text)`
-  color: white;
+  color: ${(props: buttonStyle) => `${props.color}`};
   font-weight: 600;
   font-size: 18px;
 `;
 
-const GradientButton = ({ children, onPress }: props) => {
+export const GradientButton = ({ children, onPress }: props) => {
   return (
     <ButtonContainer>
       <Gradient onPress={onPress}>
-        <ButtonText>{children}</ButtonText>
+        <ButtonText color="white">{children}</ButtonText>
       </Gradient>
     </ButtonContainer>
   );
 };
 
-export default GradientButton;
+export const GradientOButton = ({ children, onPress }: props) => {
+  return (
+    <ButtonContainer>
+      <GradientO onPress={onPress}>
+        <ButtonText color="#2b92ff">{children}</ButtonText>
+      </GradientO>
+    </ButtonContainer>
+  );
+};

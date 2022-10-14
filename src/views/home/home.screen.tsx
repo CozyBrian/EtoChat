@@ -3,12 +3,18 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileSelector from "./components/profileSelector";
 import ModeSelector from "./components/modeSelector";
-import GradientButton from "../../components/buttons";
+import { GradientButton } from "../../components/buttons";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RootStackParams } from "../../../App";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
   const [profile, setProfile] = useState("A");
   const [mode, setMode] = useState("S");
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const handleSubmit = () => {
     const data = {
@@ -18,6 +24,7 @@ const HomeScreen = () => {
     };
 
     console.log(data);
+    navigation.navigate("Waiting", {});
   };
 
   return (
@@ -41,9 +48,11 @@ const HomeScreen = () => {
           <ModeSelector set={setMode} />
         </View>
       </View>
-      <GradientButton onPress={handleSubmit}>
-        {`Find a ${mode === "L" ? "sharer" : "listener"}`}
-      </GradientButton>
+      <View style={{ paddingVertical: 14, width: "100%" }}>
+        <GradientButton onPress={handleSubmit}>
+          {`Find a ${mode === "L" ? "sharer" : "listener"}`}
+        </GradientButton>
+      </View>
     </MainContainer>
   );
 };
