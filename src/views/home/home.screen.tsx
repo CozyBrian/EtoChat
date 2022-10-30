@@ -22,9 +22,10 @@ const HomeScreen = () => {
       profile,
       mode,
     };
-
-    console.log(data);
-    navigation.navigate("Waiting", {});
+    if (text !== "") {
+      console.log(data);
+      navigation.navigate("Waiting", {});
+    }
   };
 
   return (
