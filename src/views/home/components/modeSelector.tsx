@@ -1,6 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface props {
   set: React.Dispatch<React.SetStateAction<string>>;
@@ -35,8 +36,13 @@ const ModeSelector = ({ set }: props) => {
 const CircleIndicator = ({ isSelected = false }) => {
   if (isSelected) {
     return (
-      <SelectedCircle>
-        <SelectedInnerCircle />
+      <SelectedCircle colors={["#5c40ff", "#a221ff"]} start={{ x: 0, y: 0 }}>
+        <WhiteCircle>
+          <SelectedInnerCircle
+            colors={["#5c40ff", "#a221ff"]}
+            start={{ x: 0, y: 0 }}
+          />
+        </WhiteCircle>
       </SelectedCircle>
     );
   } else {
@@ -64,22 +70,30 @@ const UnSelectedCircle = styled(View)`
   margin-right: 4px;
 `;
 
-const SelectedCircle = styled(View)`
+const SelectedCircle = styled(LinearGradient)`
   justify-content: center;
   align-items: center;
   height: 14px;
   width: 14px;
-  border: 1px solid #2b92ff;
   border-radius: 999px;
   margin-right: 4px;
   padding: 1px;
 `;
-const SelectedInnerCircle = styled(View)`
+
+const WhiteCircle = styled(View)`
+  background-color: white;
+  border-radius: 999px;
   width: 100%;
   height: 100%;
-  background-color: #2b92ff;
+  padding: 1px;
+`;
+
+const SelectedInnerCircle = styled(LinearGradient)`
+  width: 100%;
+  height: 100%;
   border-radius: 999px;
 `;
+
 const RadioText = styled(Text)`
   font-size: 16px;
   color: #919191;

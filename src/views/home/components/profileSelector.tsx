@@ -1,6 +1,7 @@
-import { Pressable, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
+import ProfileCard from "./ProfileCard";
 
 interface props {
   set: React.Dispatch<React.SetStateAction<string>>;
@@ -26,13 +27,12 @@ const ProfileSelector = ({ set }: props) => {
               {Array(3)
                 .fill("")
                 .map((_, j) => (
-                  <ItemContainer
-                    onPress={() => handleOnPress(dataSource[i + j * 3])}
+                  <ProfileCard
                     isSelected={selected === dataSource[i + j * 3]}
                     key={`item-${i + j * 3}`}
-                  >
-                    <Text>{dataSource[i + j * 3]}</Text>
-                  </ItemContainer>
+                    src={dataSource[i + j * 3]}
+                    onPress={() => handleOnPress(dataSource[i + j * 3])}
+                  />
                 ))}
             </GridRowContainer>
           ))}
@@ -53,23 +53,4 @@ const Label = styled(Text)`
 const GridRowContainer = styled(View)`
   flex-direction: row;
   justify-content: center;
-`;
-
-interface styleprop {
-  isSelected?: boolean;
-}
-
-const ItemContainer = styled(Pressable)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 6px;
-  background-color: #207dcf;
-  border-radius: 14px;
-  border: ${({ isSelected }: styleprop) =>
-    isSelected ? "2px solid black" : "none"};
-  height: 102px;
-  width: 102px;
-  /* transition: ease-in-out;
-  animation-duration: 300ms; */
 `;
