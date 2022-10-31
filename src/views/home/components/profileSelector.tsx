@@ -2,20 +2,21 @@ import { Text, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileCard from "./ProfileCard";
+import Memoji from "../../../assets/images/memojis";
 
 interface props {
   set: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ProfileSelector = ({ set }: props) => {
-  const [selected, setSelected] = useState("A");
+  const [selected, setSelected] = useState(Memoji[0].id);
 
   const handleOnPress = (id: string) => {
     setSelected(id);
     set(id);
   };
 
-  const dataSource = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+  const dataSource = Memoji;
   return (
     <>
       <Label>Select an anonymous profile picture</Label>
@@ -28,10 +29,10 @@ const ProfileSelector = ({ set }: props) => {
                 .fill("")
                 .map((_, j) => (
                   <ProfileCard
-                    isSelected={selected === dataSource[i + j * 3]}
+                    isSelected={selected === dataSource[i + j * 3].id}
                     key={`item-${i + j * 3}`}
-                    src={dataSource[i + j * 3]}
-                    onPress={() => handleOnPress(dataSource[i + j * 3])}
+                    src={dataSource[i + j * 3].src}
+                    onPress={() => handleOnPress(dataSource[i + j * 3].id)}
                   />
                 ))}
             </GridRowContainer>

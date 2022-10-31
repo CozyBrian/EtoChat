@@ -1,11 +1,11 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Image, ImageSourcePropType, Pressable, View } from "react-native";
 import styled from "styled-components";
 
 type profileCardProps = {
   isSelected: boolean;
-  src: string;
+  src: ImageSourcePropType;
   onPress: () => void;
 };
 
@@ -18,7 +18,7 @@ const ProfileCard = ({
     return (
       <Selected colors={["#5c40ff", "#a221ff"]} start={{ x: 0, y: 0 }}>
         <Card>
-          <Text>{src}</Text>
+          <MemojiImage source={src} />
         </Card>
       </Selected>
     );
@@ -26,7 +26,7 @@ const ProfileCard = ({
     return (
       <UnSelected onPress={onPress}>
         <Card>
-          <Text>{src}</Text>
+          <MemojiImage source={src} />
         </Card>
       </UnSelected>
     );
@@ -37,7 +37,6 @@ const Card = styled(View)`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #207dcf;
   border-radius: 12px;
   height: 100%;
   width: 100%;
@@ -61,6 +60,12 @@ const UnSelected = styled(Pressable)`
   height: 102px;
   width: 102px;
   padding: 1px;
+`;
+
+const MemojiImage = styled(Image)`
+  height: 99%;
+  width: 99%;
+  border-radius: 12px;
 `;
 
 export default ProfileCard;

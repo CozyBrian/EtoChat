@@ -7,10 +7,11 @@ import { GradientButton } from "../../components/buttons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
+import Memoji from "../../assets/images/memojis";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
-  const [profile, setProfile] = useState("A");
+  const [profile, setProfile] = useState(Memoji[0].id);
   const [mode, setMode] = useState("S");
 
   const navigation =
@@ -22,6 +23,7 @@ const HomeScreen = () => {
       profile,
       mode,
     };
+
     if (text !== "") {
       console.log(data);
       navigation.navigate("Waiting", {});
@@ -39,7 +41,9 @@ const HomeScreen = () => {
             text: "Proceed",
             onPress: () => {
               console.log("OK Pressed");
+              setText("Anon#001");
               navigation.navigate("Waiting", {});
+              console.log(data);
             },
           },
         ]
