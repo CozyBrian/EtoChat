@@ -14,7 +14,7 @@ const WaitingScreen = () => {
     const unsubscribe = navigation.addListener("focus", () => {
       setTimeout(() => {
         navigation.navigate("OnCall");
-      }, 1500);
+      }, 2000);
     });
 
     return unsubscribe;
@@ -23,7 +23,9 @@ const WaitingScreen = () => {
   return (
     <MainContainer>
       <Container>
-        <ProfileBubble size={102} color="#0080f9" />
+        <View>
+          <ProfileBubble size={102} color="#0080f9" />
+        </View>
         <StateTextContainer>
           <StateText>Connecting you to a listener...</StateText>
         </StateTextContainer>
@@ -39,13 +41,18 @@ const MainContainer = styled(SafeAreaView)`
 `;
 
 const Container = styled(View)`
+  position: relative;
+  bottom: 80px;
   align-items: center;
   justify-content: center;
 `;
 
 const StateTextContainer = styled(View)`
+  position: absolute;
+  top: 130px;
   width: 60%;
 `;
+
 const StateText = styled(Text)`
   font-weight: 400;
   font-size: 26px;

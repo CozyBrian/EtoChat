@@ -34,16 +34,14 @@ const HomeScreen = () => {
         [
           {
             text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
+            onPress: () => {},
             style: "cancel",
           },
           {
             text: "Proceed",
             onPress: () => {
-              console.log("OK Pressed");
               setText("Anon#001");
               navigation.navigate("Waiting", {});
-              console.log(data);
             },
           },
         ]
