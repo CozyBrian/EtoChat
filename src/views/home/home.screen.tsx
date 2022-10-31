@@ -1,5 +1,5 @@
 import { Alert, SafeAreaView, Text, TextInput, View } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import ProfileSelector from "./components/profileSelector";
 import ModeSelector from "./components/modeSelector";
@@ -7,25 +7,19 @@ import { GradientButton } from "../../components/buttons";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
-import Memoji from "../../assets/images/memojis";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { action } from "../../redux";
 
 const HomeScreen = () => {
-  const [text, setText] = useState("");
-  const [profile, setProfile] = useState(Memoji[0].id);
-  const [mode, setMode] = useState("S");
+  const User = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   const handleSubmit = () => {
-    const data = {
-      text,
-      profile,
-      mode,
-    };
-
-    if (text !== "") {
-      console.log(data);
+    if (User.username !== "") {
+      console.log(User);
       navigation.navigate("Waiting", {});
     } else {
       Alert.alert(
@@ -40,8 +34,9 @@ const HomeScreen = () => {
           {
             text: "Proceed",
             onPress: () => {
-              setText("Anon#001");
+              dispatch(action.user.setUsername(""));
               navigation.navigate("Waiting", {});
+              console.log(User);
             },
           },
         ]
@@ -59,20 +54,22 @@ const HomeScreen = () => {
           </Label>
           <TextBox
             placeholder="Type here to translate!"
-            onChangeText={(newText) => setText(newText)}
-            defaultValue={text}
+            onChangeText={(newText) =>
+              dispatch(action.user.setUsername(newText))
+            }
+            defaultValue={User.username}
           />
         </View>
         <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
-          <ProfileSelector set={setProfile} />
+          <ProfileSelector />
         </View>
         <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>
-          <ModeSelector set={setMode} />
+          <ModeSelector />
         </View>
       </View>
       <View style={{ paddingVertical: 14, width: "100%" }}>
         <GradientButton onPress={handleSubmit}>
-          {`Find a ${mode === "L" ? "sharer" : "listener"}`}
+          {`Find a ${User.mode === "LISTENER" ? "sharer" : "listener"}`}
         </GradientButton>
       </View>
     </MainContainer>

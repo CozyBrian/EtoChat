@@ -3,17 +3,16 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileCard from "./ProfileCard";
 import Memoji from "../../../assets/images/memojis";
+import { useAppDispatch } from "../../../hooks";
+import { action } from "../../../redux";
 
-interface props {
-  set: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ProfileSelector = ({ set }: props) => {
+const ProfileSelector = () => {
   const [selected, setSelected] = useState(Memoji[0].id);
+  const dispatch = useAppDispatch();
 
   const handleOnPress = (id: string) => {
     setSelected(id);
-    set(id);
+    dispatch(action.user.setProfile(id));
   };
 
   const dataSource = Memoji;

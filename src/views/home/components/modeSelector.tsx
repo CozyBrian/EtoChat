@@ -2,22 +2,24 @@ import { Pressable, Text, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAppDispatch } from "../../../hooks";
+import { action } from "../../../redux";
 
-interface props {
-  set: React.Dispatch<React.SetStateAction<string>>;
-}
+const ModeSelector = () => {
+  const [selected, setSelected] = useState("SHARER");
+  const dispatch = useAppDispatch();
 
-const ModeSelector = ({ set }: props) => {
-  const [selected, setSelected] = useState("S");
-
-  const options = [
-    { id: "S", title: "Sharer" },
-    { id: "L", title: "Listener" },
+  const options: {
+    id: "SHARER" | "LISTENER";
+    title: string;
+  }[] = [
+    { id: "SHARER", title: "Sharer" },
+    { id: "LISTENER", title: "Listener" },
   ];
 
-  const handlePress = (id: string) => {
+  const handlePress = (id: "SHARER" | "LISTENER") => {
     setSelected(id);
-    set(id);
+    dispatch(action.user.setMode(id));
   };
 
   return (

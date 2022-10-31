@@ -8,6 +8,8 @@ import HomeScreen from "./src/views/home/home.screen";
 import WaitingScreen from "./src/views/waiting/waiting.screen";
 import LobbyScreen from "./src/views/lobby/lobby.screen";
 import { LogBox } from "react-native";
+import { Provider } from "react-redux";
+import store from "./src/redux";
 
 LogBox.ignoreLogs(["SplashScreen.show"]);
 
@@ -23,18 +25,20 @@ const Stack = createNativeStackNavigator<RootStackParams>();
 export default function App() {
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <Stack.Navigator
-          initialRouteName="Home"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Waiting" component={WaitingScreen} />
-          <Stack.Screen name="OnCall" component={OnCallScreen} />
-          <Stack.Screen name="Lobby" component={LobbyScreen} />
-        </Stack.Navigator>
-        <StatusBar style="auto" />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{ headerShown: false }}
+          >
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Waiting" component={WaitingScreen} />
+            <Stack.Screen name="OnCall" component={OnCallScreen} />
+            <Stack.Screen name="Lobby" component={LobbyScreen} />
+          </Stack.Navigator>
+          <StatusBar style="auto" />
+        </View>
+      </Provider>
     </NavigationContainer>
   );
 }

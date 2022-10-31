@@ -8,7 +8,7 @@ const formatTime = (time: number) => (time < 10 ? `0${time}` : time);
 const CallTimer = ({ minutes = 0 }) => {
   const interval = useRef<any>(null);
 
-  const [millis, setMillis] = useState<number | any>(null);
+  const [millis, setMillis] = useState<number>(0);
 
   useEffect(() => {
     setMillis(minutesToMillis(minutes));
