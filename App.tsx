@@ -7,6 +7,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./src/views/home/home.screen";
 import WaitingScreen from "./src/views/waiting/waiting.screen";
 import LobbyScreen from "./src/views/lobby/lobby.screen";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["SplashScreen.show"]);
 
 export type RootStackParams = {
   Home: any;
