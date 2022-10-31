@@ -1,11 +1,14 @@
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import React from "react";
 import styled from "styled-components";
-import ProfileBubble, { Circle } from "../../components/profileBubble";
+import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
+
+import ProfileBubble from "../../components/profileBubble";
 import TitleBar from "../../components/titleBar";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
+import { TouchableCircle } from "../../components/buttons";
 
 const OnCallScreen = () => {
   const navigation =
@@ -30,11 +33,19 @@ const OnCallScreen = () => {
 
       <ControlContainer>
         <ButtonContainer>
-          <Circle size={48} color="#868686" />
-          <TouchableOpacity onPress={handleOnPress}>
-            <Circle size={58} color="#ff5151" />
-          </TouchableOpacity>
-          <Circle size={48} color="#868686" />
+          <TouchableCircle size={48} color="#868686">
+            <MaterialCommunityIcons
+              name="microphone-off"
+              size={24}
+              color="white"
+            />
+          </TouchableCircle>
+          <TouchableCircle onPress={handleOnPress} size={58} color="#ff5151">
+            <Feather name="phone" size={24} color="white" />
+          </TouchableCircle>
+          <TouchableCircle size={48} color="#868686">
+            <Ionicons name="md-volume-high-outline" size={24} color="white" />
+          </TouchableCircle>
         </ButtonContainer>
       </ControlContainer>
     </>

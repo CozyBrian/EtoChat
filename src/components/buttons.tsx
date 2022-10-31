@@ -68,6 +68,20 @@ const ButtonGText = styled(GradientText)`
   font-size: 18px;
 `;
 
+interface StyleProps {
+  size: number;
+  color: String;
+}
+
+export const TouchableCircle = styled(TouchableOpacity)`
+  background-color: ${({ color }: StyleProps) => `${color}`};
+  align-items: center;
+  justify-content: center;
+  width: ${({ size = 20 }) => `${size}px`};
+  height: ${({ size = 20 }) => `${size}px`};
+  border-radius: 999px;
+`;
+
 export const GradientButton = ({ children, onPress }: props) => {
   return (
     <ButtonContainer onPress={onPress}>

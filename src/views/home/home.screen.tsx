@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, TextInput, View } from "react-native";
+import { Alert, SafeAreaView, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileSelector from "./components/profileSelector";
@@ -25,6 +25,25 @@ const HomeScreen = () => {
     if (text !== "") {
       console.log(data);
       navigation.navigate("Waiting", {});
+    } else {
+      Alert.alert(
+        "Empty Field",
+        "Nickname field cannot be empty. Do you want to proceed with a random nickname?",
+        [
+          {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
+          {
+            text: "Proceed",
+            onPress: () => {
+              console.log("OK Pressed");
+              navigation.navigate("Waiting", {});
+            },
+          },
+        ]
+      );
     }
   };
 
