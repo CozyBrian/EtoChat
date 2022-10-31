@@ -9,6 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
 import { TouchableCircle } from "../../components/buttons";
+import CallTimer from "./components/callTimer";
 
 const OnCallScreen = () => {
   const navigation =
@@ -24,7 +25,7 @@ const OnCallScreen = () => {
         <TitleBar />
         <Container>
           <UserName>Anonymous</UserName>
-          <CallTimeText>0:01</CallTimeText>
+          <CallTimer />
         </Container>
         <BubbleContainer>
           <ProfileBubble size={80} color="#c2acfd" />
@@ -57,11 +58,6 @@ const UserName = styled(Text)`
   font-weight: 500;
   margin-bottom: 8px;
   color: #444444;
-`;
-const CallTimeText = styled(Text)`
-  font-size: 18px;
-  font-weight: 500;
-  color: #6c6c6c;
 `;
 
 const MainContainer = styled(SafeAreaView)`
