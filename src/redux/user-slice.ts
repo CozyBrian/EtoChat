@@ -20,8 +20,9 @@ const userState = createSlice({
     setUsername: (state, action: PayloadAction<string>) => {
       if (action.payload === "") {
         state.username = "Anon#369";
+      } else {
+        state.username = action.payload;
       }
-      state.username = action.payload;
     },
     setProfile: (state, action: PayloadAction<string>) => {
       state.profileID = action.payload;

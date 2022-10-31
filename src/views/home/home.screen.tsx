@@ -1,5 +1,5 @@
 import { Alert, SafeAreaView, Text, TextInput, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import ProfileSelector from "./components/profileSelector";
 import ModeSelector from "./components/modeSelector";
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { action } from "../../redux";
 
 const HomeScreen = () => {
+  const [text, setText] = useState("");
   const User = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
@@ -54,10 +55,11 @@ const HomeScreen = () => {
           </Label>
           <TextBox
             placeholder="Type here to translate!"
-            onChangeText={(newText) =>
-              dispatch(action.user.setUsername(newText))
-            }
-            defaultValue={User.username}
+            onChangeText={(newText) => setText(newText)}
+            defaultValue={text}
+            onSubmitEditing={() => {
+              dispatch(action.user.setUsername(text));
+            }}
           />
         </View>
         <View style={{ paddingHorizontal: 20, paddingTop: 8 }}>

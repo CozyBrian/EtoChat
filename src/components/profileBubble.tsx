@@ -61,7 +61,7 @@ const AnimatedCircle = ({
 
 interface StyleProps {
   size: number;
-  color: String;
+  color?: String;
   delay?: number;
 }
 

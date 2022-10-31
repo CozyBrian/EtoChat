@@ -5,8 +5,11 @@ import { SafeAreaView, Text, View } from "react-native";
 import styled from "styled-components";
 import { RootStackParams } from "../../../App";
 import ProfileBubble from "../../components/profileBubble";
+import { useAppSelector } from "../../hooks";
 
 const WaitingScreen = () => {
+  const User = useAppSelector((state) => state.user);
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
@@ -27,7 +30,10 @@ const WaitingScreen = () => {
           <ProfileBubble size={102} color="#0080f9" />
         </View>
         <StateTextContainer>
-          <StateText>Connecting you to a listener...</StateText>
+          <StateText>
+            Connecting you to a{" "}
+            {User.mode === "LISTENER" ? "sharer" : "listener"}...
+          </StateText>
         </StateTextContainer>
       </Container>
     </MainContainer>
