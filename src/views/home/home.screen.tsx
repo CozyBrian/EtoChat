@@ -9,6 +9,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { action } from "../../redux";
+import { UserGen } from "../../utils";
 
 const HomeScreen = () => {
   const [text, setText] = useState("");
@@ -35,9 +36,8 @@ const HomeScreen = () => {
           {
             text: "Proceed",
             onPress: () => {
-              dispatch(action.user.setUsername(""));
-              navigation.navigate("Waiting", {});
-              console.log(User);
+              setText(UserGen());
+              dispatch(action.user.setUsername(text));
             },
           },
         ]

@@ -14,23 +14,16 @@ const ProfileCard = ({
   src,
   onPress,
 }: profileCardProps) => {
-  if (isSelected) {
-    return (
-      <Selected colors={["#5c40ff", "#a221ff"]} start={{ x: 0, y: 0 }}>
-        <Card>
-          <MemojiImage source={src} />
-        </Card>
-      </Selected>
-    );
-  } else {
-    return (
-      <UnSelected onPress={onPress}>
-        <Card>
-          <MemojiImage source={src} />
-        </Card>
-      </UnSelected>
-    );
-  }
+  return (
+    <ProfileContainer onPress={onPress}>
+      {isSelected && (
+        <Selected colors={["#5c40ff", "#a221ff"]} start={{ x: 0, y: 0 }} />
+      )}
+      <Card>
+        <MemojiImage source={src} />
+      </Card>
+    </ProfileContainer>
+  );
 };
 
 const Card = styled(View)`
@@ -42,24 +35,23 @@ const Card = styled(View)`
   width: 100%;
 `;
 
-const Selected = styled(LinearGradient)`
+const ProfileContainer = styled(Pressable)`
+  position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 14px;
   margin: 6px;
   height: 102px;
   width: 102px;
-  padding: 2px;
 `;
 
-const UnSelected = styled(Pressable)`
+const Selected = styled(LinearGradient)`
+  position: absolute;
   justify-content: center;
   align-items: center;
-  border-radius: 14px;
-  margin: 6px;
-  height: 102px;
-  width: 102px;
-  padding: 1px;
+  border-radius: 12px;
+  height: 104px;
+  width: 104px;
 `;
 
 const MemojiImage = styled(Image)`
