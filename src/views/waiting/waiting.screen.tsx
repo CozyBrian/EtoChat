@@ -1,11 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import React, { useEffect } from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { Alert, SafeAreaView, Text, View } from "react-native";
 import styled from "styled-components";
 import { RootStackParams } from "../../../App";
 import ProfileBubble from "../../components/profileBubble";
 import { useAppSelector } from "../../hooks";
+import callListener from "../../services";
 
 const WaitingScreen = () => {
   const User = useAppSelector((state) => state.user);
@@ -15,9 +16,26 @@ const WaitingScreen = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      setTimeout(() => {
-        navigation.navigate("OnCall");
-      }, 2000);
+      callListener(1, 3000)
+        .then(() => {
+          navigation.navigate("OnCall");
+        })
+        .catch((error) => {
+          console.log(error);
+          Alert.alert(
+            "Connection Error",
+            "Could not communitcate with the server",
+            [
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("Home");
+                },
+              },
+            ]
+          );
+        });
+      console.log("waiting screen");
     });
 
     return unsubscribe;
