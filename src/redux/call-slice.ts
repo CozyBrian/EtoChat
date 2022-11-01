@@ -12,17 +12,21 @@ const callState = createSlice({
   name: "call",
   initialState,
   reducers: {
-    setIncomingID: (state, action: PayloadAction<UserType>) => {
+    setIncomingUser: (state, action: PayloadAction<UserType>) => {
       state.incomingUser = action.payload;
     },
     setOnCall: (state, action: PayloadAction<boolean>) => {
       state.onCall = action.payload;
+      if (action.payload === false) {
+        state.isMicMute = false;
+        state.isLoudSpeaker = false;
+      }
     },
-    setIsMicMute: (state, action: PayloadAction<boolean>) => {
-      state.isMicMute = action.payload;
+    ToggleIsMicMute: (state) => {
+      state.isMicMute = !state.isMicMute;
     },
-    setIsLoudSpeaker: (state, action: PayloadAction<boolean>) => {
-      state.isLoudSpeaker = action.payload;
+    ToggleIsLoudSpeaker: (state) => {
+      state.isLoudSpeaker = !state.isLoudSpeaker;
     },
   },
 });

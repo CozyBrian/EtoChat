@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { RootStackParams } from "../../../App";
 import ProfileBubble from "../../components/profileBubble";
 import { useAppSelector } from "../../hooks";
-import callListener from "../../services";
+import initCall from "../../services";
 
 const WaitingScreen = () => {
   const User = useAppSelector((state) => state.user);
@@ -16,7 +16,7 @@ const WaitingScreen = () => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      callListener(1, 3000)
+      initCall(0, 1000)
         .then(() => {
           navigation.navigate("OnCall");
         })

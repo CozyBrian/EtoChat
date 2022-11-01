@@ -1,5 +1,5 @@
 import { SafeAreaView, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 
@@ -10,13 +10,34 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParams } from "../../../App";
 import { TouchableCircle } from "../../components/buttons";
 import CallTimer from "./components/callTimer";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { action } from "../../redux";
 
 const OnCallScreen = () => {
+  const CallState = useAppSelector((state) => state.call);
+  const dispatch = useAppDispatch();
+
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
-  const handleOnPress = () => {
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      dispatch(action.call.setOnCall(true));
+    });
+
+    return unsubscribe;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigation]);
+
+  const handleEndCall = () => {
+    dispatch(action.call.setOnCall(false));
     navigation.navigate("Lobby");
+  };
+  const handleMuteButton = () => {
+    dispatch(action.call.ToggleIsMicMute());
+  };
+  const handleSpeakerButton = () => {
+    dispatch(action.call.ToggleIsLoudSpeaker());
   };
 
   return (
@@ -34,17 +55,25 @@ const OnCallScreen = () => {
 
       <ControlContainer>
         <ButtonContainer>
-          <TouchableCircle size={48} color="#868686">
+          <TouchableCircle
+            onPress={handleMuteButton}
+            size={48}
+            color={CallState.isMicMute ? "#868686" : "#d4d4d4"}
+          >
             <MaterialCommunityIcons
               name="microphone-off"
               size={24}
               color="white"
             />
           </TouchableCircle>
-          <TouchableCircle onPress={handleOnPress} size={58} color="#ff5151">
+          <TouchableCircle onPress={handleEndCall} size={58} color="#ff5151">
             <Feather name="phone" size={24} color="white" />
           </TouchableCircle>
-          <TouchableCircle size={48} color="#868686">
+          <TouchableCircle
+            onPress={handleSpeakerButton}
+            size={48}
+            color={CallState.isLoudSpeaker ? "#868686" : "#d4d4d4"}
+          >
             <Ionicons name="md-volume-high-outline" size={24} color="white" />
           </TouchableCircle>
         </ButtonContainer>

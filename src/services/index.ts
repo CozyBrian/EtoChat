@@ -1,4 +1,4 @@
-const callListener = (num: number, timeout: number) =>
+const initCall = (num: number, timeout: number) =>
   new Promise(function (resolve, reject) {
     // do a thing, possibly async, then…
     setTimeout(() => {
@@ -10,4 +10,4 @@ const callListener = (num: number, timeout: number) =>
     }, timeout);
   });
 
-export default callListener;
+export default initCall;
