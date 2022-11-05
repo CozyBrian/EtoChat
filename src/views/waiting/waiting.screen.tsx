@@ -1,8 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, SafeAreaView, Text, View } from "react-native";
 import styled from "styled-components";
+import { Audio } from "expo-av";
+
 import { RootStackParams } from "../../../App";
 import ProfileBubble from "../../components/profileBubble";
 import { useAppSelector } from "../../hooks";
@@ -10,15 +12,36 @@ import initCall from "../../services";
 
 const WaitingScreen = () => {
   const User = useAppSelector((state) => state.user);
+  const [audio, setAudio] = useState<Audio.Sound | undefined>();
+
+  const playAudio = async () => {
+    console.log("Loading sound");
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../assets/audio/connecting.mp3"),
+      { isLooping: true, shouldPlay: true }
+    );
+    setAudio(sound);
+    console.log("Playing Sound");
+  };
+
+  useEffect(() => {
+    return audio
+      ? () => {
+          console.log("Unloading Sound");
+          audio.unloadAsync();
+        }
+      : undefined;
+  }, [audio]);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      initCall(0, 1000)
+      playAudio();
+      initCall(0, 4000)
         .then(() => {
-          navigation.navigate("OnCall");
+          navigation.replace("OnCall");
         })
         .catch((error) => {
           console.log(error);
@@ -29,7 +52,7 @@ const WaitingScreen = () => {
               {
                 text: "OK",
                 onPress: () => {
-                  navigation.navigate("Home");
+                  navigation.replace("Home");
                 },
               },
             ]

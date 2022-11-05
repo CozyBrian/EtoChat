@@ -25,7 +25,7 @@ const LobbyScreen = () => {
   };
 
   const handleFind = () => {
-    navigation.navigate("Waiting");
+    navigation.replace("Waiting");
   };
 
   const handleLogOut = () => {

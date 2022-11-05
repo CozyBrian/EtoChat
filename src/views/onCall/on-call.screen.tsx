@@ -31,7 +31,7 @@ const OnCallScreen = () => {
 
   const handleEndCall = () => {
     dispatch(action.call.setOnCall(false));
-    navigation.navigate("Lobby");
+    navigation.replace("Lobby");
   };
   const handleMuteButton = () => {
     dispatch(action.call.ToggleIsMicMute());
