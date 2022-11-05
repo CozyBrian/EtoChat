@@ -1,7 +1,8 @@
 import { SafeAreaView, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
+import { Audio } from "expo-av";
 
 import ProfileBubble from "../../components/profileBubble";
 import TitleBar from "../../components/titleBar";
@@ -14,14 +15,57 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { action } from "../../redux";
 
 const OnCallScreen = () => {
+  const [audio, setAudio] = useState<Audio.Sound | undefined>();
+  const [audio2, setAudio2] = useState<Audio.Sound | undefined>();
   const CallState = useAppSelector((state) => state.call);
   const dispatch = useAppDispatch();
+
+  const playConnectAudio = async () => {
+    console.log("Loading sound");
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../assets/audio/connected.mp3")
+    );
+    setAudio(sound);
+    console.log("Playing Sound");
+
+    sound.playAsync();
+  };
+
+  const playDisconnectAudio = async () => {
+    console.log("Loading sound");
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../assets/audio/disconnected.mp3")
+    );
+    setAudio2(sound);
+    console.log("Playing Sound");
+
+    sound.playAsync();
+  };
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParams>>();
 
   useEffect(() => {
+    return audio
+      ? () => {
+          console.log("Unloading Sound");
+          audio.unloadAsync();
+        }
+      : undefined;
+  }, [audio]);
+
+  useEffect(() => {
+    return audio2
+      ? () => {
+          console.log("Unloading Sound");
+          audio2.unloadAsync();
+        }
+      : undefined;
+  }, [audio2]);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
+      playConnectAudio();
       dispatch(action.call.setOnCall(true));
     });
 
@@ -31,8 +75,10 @@ const OnCallScreen = () => {
 
   const handleEndCall = () => {
     dispatch(action.call.setOnCall(false));
+    playDisconnectAudio();
     navigation.replace("Lobby");
   };
+
   const handleMuteButton = () => {
     dispatch(action.call.ToggleIsMicMute());
   };
